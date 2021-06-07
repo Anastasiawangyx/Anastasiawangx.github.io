@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>神经网络为何很难训练？ | Ana's blog</title><meta name="keywords" content="network,python"><meta name="author" content="Anastasia"><meta name="copyright" content="Anastasia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="写在前面  此文是我学习AI入门的笔记。学习教材《neural networks and deep learning》，作者Michael Nielsen。 这是一本免费的书籍，网址在这里。 此文是第五章内容的学习总结，前几章的内容总结可以见我的博客。 初学者入门，如有错误，请指正。  消失的梯度问题（The vanishing gradient probm） 当要处理一个比较复杂的问题时，我们往">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络为何很难训练？">
+<meta property="og:url" content="http://example.com/2020/09/11/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%BA%E4%BD%95%E5%BE%88%E9%9A%BE%E8%AE%AD%E7%BB%83%EF%BC%9F%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Ana&#39;s blog">
+<meta property="og:description" content="写在前面  此文是我学习AI入门的笔记。学习教材《neural networks and deep learning》，作者Michael Nielsen。 这是一本免费的书籍，网址在这里。 此文是第五章内容的学习总结，前几章的内容总结可以见我的博客。 初学者入门，如有错误，请指正。  消失的梯度问题（The vanishing gradient probm） 当要处理一个比较复杂的问题时，我们往">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg">
+<meta property="article:published_time" content="2020-09-11T08:37:00.000Z">
+<meta property="article:modified_time" content="2021-06-07T01:37:55.471Z">
+<meta property="article:author" content="Anastasia">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/09/11/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%BA%E4%BD%95%E5%BE%88%E9%9A%BE%E8%AE%AD%E7%BB%83%EF%BC%9F%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-06-07 09:37:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Ana's blog" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">消失的梯度问题（The vanishing gradient probm）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">深度神经网络中梯度的不稳定性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%B6%88%E5%A4%B1%E6%A2%AF%E5%BA%A6%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="toc-number">3.1.</span> <span class="toc-text">1. 消失梯度的解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A2%AF%E5%BA%A6%E6%BF%80%E5%A2%9E%E9%97%AE%E9%A2%98%EF%BC%88The-exploding-gradient-problem%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">2. 梯度激增问题（The exploding gradient problem）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%8D%E7%A8%B3%E5%AE%9A%E7%9A%84%E6%A2%AF%E5%BA%A6%E9%97%AE%E9%A2%98"><span class="toc-number">3.3.</span> <span class="toc-text">3. 不稳定的梯度问题</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ana's blog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">神经网络为何很难训练？</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-11T08:37:00.000Z" title="发表于 2020-09-11 16:37:00">2020-09-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-06-07T01:37:55.471Z" title="更新于 2021-06-07 09:37:55">2021-06-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/network/">network</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1>写在前面</h1>
+<ol>
+<li>此文是我学习AI入门的笔记。学习教材《neural networks and deep learning》，作者Michael Nielsen。</li>
+<li>这是一本免费的书籍，网址<a target="_blank" rel="noopener" href="http://neuralnetworksanddeeplearning.com/chap5.html">在这里</a>。</li>
+<li>此文是<strong>第五章</strong>内容的学习总结，前几章的内容总结可以见<a target="_blank" rel="noopener" href="https://anastasiawangyx.github.io/">我的博客</a>。</li>
+<li>初学者入门，如有错误，请指正。</li>
+</ol>
+<h1>消失的梯度问题（The vanishing gradient probm）</h1>
+<p>当要处理一个比较复杂的问题时，我们往往倾向于将问题分解成一个个简单的问题，逐个解决。</p>
+<p>将这一点运用在神经网络上，我们可以使用<strong>多层的神经网络来处理问题。</strong></p>
+<p>例如，如果我们在进⾏视觉模式识别：</p>
+<p>在第⼀层的神经元可能学会识别<strong>边</strong>。</p>
+<p>在第⼆层的神经元可以在边的基础上学会识别出更加复杂的形状，例如三⻆形或者矩形。</p>
+<p>第三层将能够识别更加复杂的形状。</p>
+<p>依此类推。这些多层的抽象看起来能够赋予深度⽹络⼀种学习解决复杂模式识别问题的能力。</p>
+<p>前面我们所搭建的用来<kbd>识别手写数字</kbd>的网络，是一个三层（输入层-隐藏层-输出层）的浅层神经网络，第一层784个神经元，第二层30个神经元，第三层10个神经元。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> network2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net=network2.Network([<span class="number">784</span>,<span class="number">30</span>,<span class="number">10</span>])</span><br></pre></td></tr></table></figure>
+<p>我们使用这个神经网络进行手写数字识别时，达到了<strong>96.48</strong>%的正确率。（详情见<a target="_blank" rel="noopener" href="https://blog.csdn.net/Anastasiawangyx/article/details/102649158">第一章</a>）</p>
+<p>让我们尝试再加一层具有30个神经元的隐藏层。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network2.Network([<span class="number">784</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">10</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">0.1</span>, lmbda=<span class="number">5.0</span>, </span><br><span class="line"><span class="meta">... </span>evaluation_data=validation_data,monitor_evaluation_accuracy=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>最终结果是，准确率升到了<strong>96.90</strong>%。</p>
+<p>再加一层隐藏层。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network2.Network([<span class="number">784</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">10</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">0.1</span>, lmbda=<span class="number">5.0</span>, </span><br><span class="line"><span class="meta">... </span>evaluation_data=validation_data, monitor_evaluation_accuracy=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>准确率降到了<strong>96.57</strong>%。</p>
+<p>再加一层隐藏层。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network2.Network([<span class="number">784</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">10</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">0.1</span>, lmbda=<span class="number">5.0</span>, </span><br><span class="line"><span class="meta">... </span>evaluation_data=validation_data, monitor_evaluation_accuracy=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>在具有五层隐藏层的神经网络中，准确度降到了<strong>96.53</strong>%.</p>
+<p>虽然不是一个很明显的下降，但是却告诉我们，深度神经网络在解决问题的时候效率似乎并没有比浅层神经网络好到哪里去。</p>
+<p>这显然与我们之前的假设相悖。</p>
+<p>问题其实是出现在，我们的<strong>学习算法并没有发现正确的权值和偏置。</strong></p>
+<p>下面我们将这个问题可视化。</p>
+<p>我们选取具有<strong>两层有隐藏层</strong>的神经网络[784,30,30,10]，下图的条状图形给出的是<strong>隐藏层最顶部六个神经元学习改变速率</strong><kbd> ∂C/∂b</kbd></p>
+<p>即<strong>代价函数关于权重改变的速率</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200110192201217.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+因为神经网络的权重和偏置是被<strong>随机初始化</strong>的，所以此处的条状长短不一。</p>
+<p>但是还是可以很明显的看出，第二隐藏层的改变速率普遍比第一层要大。</p>
+<p>实际的数学计算也表明了这个事实:</p>
+<p>如果我们令<kbd>δ^l^~j~ = ∂C/∂b^l^~j~</kbd>表示第 l 层的第 j 个神经元的梯度，我们可以将 δ^1^看做是⼀个向量其中元素表⽰第⼀层隐藏层的学习速度，δ^2^ 则是第⼆层隐藏层的学习速度。接着使⽤这些向量的⻓度作为全局衡量这些隐藏层的学习速度的度量。</p>
+<p>因此，||δ^1^|| 就代表第⼀层隐藏层学习速度，⽽ ||δ^2^|| 就代表第⼆层隐藏层学习速度。</p>
+<p>借助这些定义，在和上图同样的配置下，||δ^1^|| = 0.07 ⽽ ||δ^2^|| = 0.31.</p>
+<p>如果我们有三个隐藏层，⽐如说在⼀个 [784, 30, 30, 10] 的⽹络中，那么对应的学习速度就是 <strong>0.012, 0.060, 0.283</strong>。这⾥前⾯的隐藏层学习速度还是要低于最<br>
+后的隐藏层。假设我们增加另⼀个包含 30 个隐藏神经元的隐藏层。那么，对应的学习速度就是：<strong>0.003, 0.017, 0.070, 0.285</strong>。</p>
+<p>还是⼀样的模式：前⾯的层学习速度低于后⾯的层。</p>
+<p>以上所述均为训练刚开始时的学习速率，那么，这个速率会随着学习的推移发生什么变化呢？</p>
+<p>只有两个隐藏层时的情况：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200110193331822.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+三层隐藏层的情况：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200110193424785.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>四层隐藏层的情况：<br>
+<img src="https://img-blog.csdnimg.cn/2020011019343939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>由此可以得出的一个结论：</p>
+<p><strong>在某些深度神经网络中，我们在隐藏层反向传播的时候，梯度倾向于变小</strong>。</p>
+<p>这意味着前面隐藏层的神经元的学习速率要低于后面隐藏层的神经元。</p>
+<h1>深度神经网络中梯度的不稳定性</h1>
+<h2 id="1-消失梯度的解释">1. 消失梯度的解释</h2>
+<p>为了弄清楚为何会出现消失的梯度，来看看⼀个极简单的深度神经⽹络：每⼀层都只有⼀个单⼀的神经元。下图就是有三层隐藏层的神经⽹络：<br>
+<img src="https://img-blog.csdnimg.cn/20200110201313490.png" alt="在这里插入图片描述"><br>
+这⾥，w1, w2, . . . 是权重，⽽ b1, b2, . . . 是偏置，C 则是某个代价函数。</p>
+<p>我们在这个神经网络的基础上，计算<strong>第一个隐藏神经元</strong>的梯度∂C/∂b~1~</p>
+<p>这里直接给出结论，具体证明过程<a target="_blank" rel="noopener" href="http://neuralnetworksanddeeplearning.com/chap5.html#what%27s_causing_the_vanishing_gradient_problem_unstable_gradients_in_deep_neural_nets">演示。</a><br>
+<img src="https://img-blog.csdnimg.cn/2020011020162496.png" alt="在这里插入图片描述"><br>
+除了最后⼀项，该表达式是⼀系列形如 w~j~σ′(z~j~ ) 的乘积。为了理解每个项的⾏为，先看看下⾯的 sigmoid 函数导数的图像：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200111111548748.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>该导数在 σ′(0) = 1/4 时达到最⾼，所以σ′(0)&lt;= 1/4。</p>
+<p>我们使⽤标准⽅法来初始化⽹络中的<strong>权重</strong>，那么会使⽤⼀个<strong>均值为 0 标准差为 1 的⾼斯分布</strong>，因此此所有的权重通常会满⾜ |w~j~ | &lt; 1.</p>
+<p>因此，我们发现会有 w~j~σ′(z~j~ ) &lt; 1/4。并且在我们进⾏了所有这些项的乘积时，最终结果肯定会指数级下降：项越多，乘积的下降的越快。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200111112035540.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>这是一个对于梯度消失问题的合理解释。</p>
+<h2 id="2-梯度激增问题（The-exploding-gradient-problem）">2. 梯度激增问题（The exploding gradient problem）</h2>
+<p>当我们的权重在学习的过程中不断增大时，通过前面的计算我们可以知道，前面隐藏层的学习速率会在反向传播的时候获得<strong>指数级的增长</strong>，这也称为指数激增问题。</p>
+<h2 id="3-不稳定的梯度问题">3. 不稳定的梯度问题</h2>
+<p>根本的问题其实并⾮是消失的梯度问题或者激增的梯度问题，⽽是<strong>在前⾯的层上的梯度是来⾃后⾯的层上项的乘积</strong>。当存在过多的层次时，就出现了内在本质上的不稳定情况。</p>
+<p>特别的，对于每一层包含更多神经元的复杂的神经网络，此问题依旧存在。实践中，⼀般会发现在sigmoid ⽹络中前⾯的层的梯度<strong>指数级地消失</strong>。所以在这些层上的学习速度就会变得很慢了。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Anastasia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/09/11/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%BA%E4%BD%95%E5%BE%88%E9%9A%BE%E8%AE%AD%E7%BB%83%EF%BC%9F%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/">http://example.com/2020/09/11/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%BA%E4%BD%95%E5%BE%88%E9%9A%BE%E8%AE%AD%E7%BB%83%EF%BC%9F%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ana's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/network/">network</a><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/11/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8F%AF%E4%BB%A5%E8%AE%A1%E7%AE%97%E4%BB%BB%E4%BD%95%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E8%AF%81%E6%98%8E%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/"><img class="prev-cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">神经网络可以计算任何函数的可视化证明</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/11/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9CCNN+%E8%AF%86%E5%88%AB%E6%89%8B%E5%86%99%E6%95%B0%E5%AD%97MNIST%EF%BC%88%E9%99%84%E4%BB%A3%E7%A0%81%EF%BC%89%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/"><img class="next-cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">卷积神经网络(CNN)识别手写数字MNIST(附代码)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/09/10/2020-09-10-手写数字识别MNIST（python3）/" title="手写数字识别MNIST（python3）"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-834cdc1e1f29e1f92ec25185fe1e964e_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-10</div><div class="title">手写数字识别MNIST（python3）</div></div></a></div><div><a href="/2020/09/11/反向传播算法（backpropagation）计算梯度下降（SGD）——AI入门/" title="反向传播算法(backpropagation)计算梯度下降(SGD)详解"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">反向传播算法(backpropagation)计算梯度下降(SGD)详解</div></div></a></div><div><a href="/2020/09/11/神经网络可以计算任何函数的可视化证明——AI入门/" title="神经网络可以计算任何函数的可视化证明"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">神经网络可以计算任何函数的可视化证明</div></div></a></div><div><a href="/2020/09/11/2020-09-11-改善神经网络的学习方法（交叉熵函数，过度拟合，规范化，初始化权重）/" title="改善神经网络的学习方法（交叉熵函数，过度拟合，规范化，初始化权重）"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">改善神经网络的学习方法（交叉熵函数，过度拟合，规范化，初始化权重）</div></div></a></div><div><a href="/2020/09/11/卷积神经网络CNN+识别手写数字MNIST（附代码）——AI入门/" title="卷积神经网络(CNN)识别手写数字MNIST(附代码)"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">卷积神经网络(CNN)识别手写数字MNIST(附代码)</div></div></a></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Anastasia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">hello stranger</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>

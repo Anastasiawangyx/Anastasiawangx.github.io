@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ana's blog</title><meta name="author" content="Anastasia"><meta name="copyright" content="Anastasia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta property="og:type" content="website">
+<meta property="og:title" content="Ana&#39;s blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Ana&#39;s blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/avatar.jpg">
+<meta property="article:author" content="Anastasia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2021-06-07 10:26:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Ana's blog" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://mdimage001.oss-cn-beijing.aliyuncs.com/img/wallhaven-eydyx8.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ana's blog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">Ana's blog</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/12/15/c-%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="c++纯虚函数与抽象基类">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++纯虚函数与抽象基类"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/12/15/c-%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="c++纯虚函数与抽象基类">c++纯虚函数与抽象基类</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-15T06:55:24.000Z" title="发表于 2020-12-15 14:55:24">2020-12-15</time></span></div><div class="content">c++面向对象编程的思想之一是可以使用继承。继承中一个重要的思想是使用抽象基类（abstract base class，ABC）。
+假设我们开发一个程序，需要使用椭圆和圆两种图形。因为圆是椭圆的一种特殊情形，根据继承‘is-a’的思想，自然会想到先定义一个Eclipse类，再将Circle类继承自Eclipse类。
+但这样实现有不好的地方。
+椭圆中，需要表示长半轴和短半轴、angle（长轴和水平线的夹角），还可以有rotate方法将椭圆进行旋转，这些都是圆所不需要的，将圆继承自椭圆，是十分笨拙的。
+一种更好的办法是，使用抽象基类（ABC），将椭圆和圆的共性部分，例如坐标x、y，共同的方法例如移动move、计算面积Area抽象出来放到一个基类shape中，再将Eclipse和Circle类分别继承shape，这样就可以使用基类指针数组同时管理Eclipse和Circle对象。
+当类声明中包含纯虚函数时，不能创建该类的对象，此类称为抽象基类。
+纯虚函数的声明如下（以Area为例）：
+1virtual double Area() const =0 ;
+ABC类shape的定义如下：
+1234 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/12/12/c-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6/" title="c++重载运算符">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++重载运算符"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/12/12/c-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6/" title="c++重载运算符">c++重载运算符</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-12T03:35:42.000Z" title="发表于 2020-12-12 11:35:42">2020-12-12</time></span></div><div class="content">运算符的重载使得我们可以更加方便的使用常见的运算符进行操作。
+重载运算符的函数格式如下：
+1operatorop(argement-list)
+接下来的例子中，我们将定义一个Time类，并通过重载运算符+和&lt;&lt;来实现时间的加法和输出显示，其中会使用友元函数（friend）
+time.h
+1234567891011121314#ifndef TIME_H#define TIME_H#include &lt;iostream&gt;class Time&#123;  private:  	int minute;  	int hour;  public:  	Time();  	Time(int h=0,int m=0);		Time operator+(const Time &amp; t)const;				//重载运算符+  	friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const Time &amp; t);//重载运算符&lt;&lt;，使用了友元函数&#125;#end if
+ti ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/12/09/c-%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" title="c++引用变量详解">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++引用变量详解"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/12/09/c-%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" title="c++引用变量详解">c++引用变量详解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-09T06:32:31.000Z" title="发表于 2020-12-09 14:32:31">2020-12-09</time></span></div><div class="content">创建引用变量
+引用变量，是已定义变量的别名。
+c++中使用&amp;符号来创建引用变量。
+例如，将rodents定义为rats的别名，则可以使用以下代码：
+12int rats;int &amp; rodents=rats;
+此时，rodents和rats指向相同的值和地址。
+可以通过下面的代码来测试：
+123456789int rats=101;int &amp; rodents=rats;cout&lt;&lt;&quot;rats=&quot;&lt;&lt;rats&lt;&lt;&quot;,rodents=&quot;&lt;&lt;rodents&lt;&lt;endl;rodents++;cout&lt;&lt;&quot;rats=&quot;&lt;&lt;rats&lt;&lt;&quot;,rodents=&quot;&lt;&lt;rodents&lt;&lt;endl;//outputrats=101,rodents=101rats=102,rodents=102
+从这方面来说，引用和指针很像，但是有几点不同：
+
+引用必须在声明的时候初始化，而不能先声明，再 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/12/09/c-%E5%B0%86%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%EF%BC%88%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%89/" title="c++将函数作为函数参数（函数指针）">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++将函数作为函数参数（函数指针）"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/12/09/c-%E5%B0%86%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%EF%BC%88%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%89/" title="c++将函数作为函数参数（函数指针）">c++将函数作为函数参数（函数指针）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-09T03:29:48.000Z" title="发表于 2020-12-09 11:29:48">2020-12-09</time></span></div><div class="content">如何获取函数的地址
+函数名本身就是函数的地址。
+假设有一个函数think()，则think就是该函数的地址。
+要将函数作为参数进行传递，必须传递函数名。
+12process(think);			//传递的是函数地址process(think());		//传递的是函数的返回值
+声明函数指针
+在声明指向函数的指针时，要声明指针指向的函数的类型，即声明应指定函数的返回值类型和参数列表。
+假设有一函数，原型如下：double pam(int);
+则正确的指针声明如下：double (*pt)(int)
+其中，(*pt)是函数，pt是函数指针。
+在正确的声明了指针之后，我们就可以将相应的函数的地址赋给它：
+pt=pam
+使用指针来调用函数
+前面指出，(*pt)是函数，与pam作用相同，因此使用的时候直接将它看作函数名即可。
+123456double pam(int);double (*pt)(int);pt=pam;double x=pam(10);double y=(*pt)(10);double z=pt(10);		//also valid
+例子
+假设我们需要设计一个名为estimate ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/10/13/OpenGL%E6%A8%A1%E5%9E%8B%E5%8A%A0%E8%BD%BD/" title="OpenGL模型加载">     <img class="post_bg" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-e69171fabad611d71a99dd9528dcf35b_1440w.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenGL模型加载"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/13/OpenGL%E6%A8%A1%E5%9E%8B%E5%8A%A0%E8%BD%BD/" title="OpenGL模型加载">OpenGL模型加载</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-13T14:00:00.000Z" title="发表于 2020-10-13 22:00:00">2020-10-13</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/opengl/">opengl</a></span></div><div class="content">是最近学OpenGL的阶段性总结。
+学习网址：learnopengl-cn
+源码地址：github
+对前三节，入门、光照、模型加载的总结。
+关于如何使用OpenGL加载一个3D模型并显示在窗口中。
+使用OpenGL实现模型加载
+初始化GLFW
+12345678glfwInit();    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);#ifdef __APPLE__    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);#endif
+创建GLFW窗口
+1234567GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, &quot;LearnOpenGL&quot;, NULL, NULL); ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/10/08/OpenGL%E4%B8%AD%E7%9A%84VAO%E4%B8%8EVBO/" title="OpenGL中的VAO与VBO">     <img class="post_bg" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-e69171fabad611d71a99dd9528dcf35b_1440w.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenGL中的VAO与VBO"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/08/OpenGL%E4%B8%AD%E7%9A%84VAO%E4%B8%8EVBO/" title="OpenGL中的VAO与VBO">OpenGL中的VAO与VBO</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-08T10:45:00.000Z" title="发表于 2020-10-08 18:45:00">2020-10-08</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/opengl/">opengl</a></span></div><div class="content">最近在学习OpenGL的时候，看到了一篇关于讲解VAO和VBO比较好的文章，这里做一下搬运和改良。
+原文地址：AB是一家？VAO与VBO
+VBO
+与其他buffer object一样，VBO归根到底是显卡存储空间里的一块缓存区(Buffer)而已，这个Buffer有它的名字(VBO的ID)，OpenGL在GPU的某处记录着这个ID和对应的显存地址（或者地址偏移，类似内存）。用代码看看吧：
+123456//生成一个Buffer的ID，不管是什么类型的  glGenBuffers(1, &amp;VBO);   //绑定ID，同时也指定该ID对应的buffer的信息类型是GL_ARRAY_BUFFER  glBindBuffer(GL_ARRAY_BUFFER, VBO);  //为该ID指定一块指定大小的存储区域（区域的位置大抵由末参数影响),  传输数据      glBufferData(GL_ARRAY_BUFFER, sizeof(Data), Data, GL_STATIC_DRAW);  
+这里是VBO的初始化阶段。在这里我们看到了这是对位置，还是颜色，还是纹理坐标，还是法线 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/10/08/OpenGL%E4%B9%8BGLAD%E5%88%9D%E5%A7%8B%E5%8C%96/" title="OpenGL之GLAD初始化">     <img class="post_bg" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-f76808734ef9dd3a533f3b23f76b0bf5_1440w.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenGL之GLAD初始化"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/08/OpenGL%E4%B9%8BGLAD%E5%88%9D%E5%A7%8B%E5%8C%96/" title="OpenGL之GLAD初始化">OpenGL之GLAD初始化</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-08T08:03:54.000Z" title="发表于 2020-10-08 16:03:54">2020-10-08</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/opengl/">opengl</a></span></div><div class="content">GLAD初始化
+在GLAD初始化时，会用到下面的语句:
+12345if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))    &#123;        std::cout &lt;&lt; &quot;Failed to initialize GLAD&quot; &lt;&lt; std::endl;        return -1;    &#125;
+并且在我的代码中，如果这段初始化代码的位置放置有问题，run的时候就直接输出Fail to initialize GLAD。
+如果按照下面的顺序放置，就会fail
+1234567if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))    &#123;        std::cout &lt;&lt; &quot;Failed to initialize GLAD&quot; &lt;&lt; std::endl;        return -1;    &#125;glfwMakeContextCurren ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/10/08/Mac%E4%B8%8BClion%E9%85%8D%E7%BD%AEopenGL%E7%8E%AF%E5%A2%83/" title="Mac下Clion配置openGL环境">     <img class="post_bg" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-b4cfa969e736dbdae9ffd4fe0eaa97e6_1440w.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mac下Clion配置openGL环境"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/08/Mac%E4%B8%8BClion%E9%85%8D%E7%BD%AEopenGL%E7%8E%AF%E5%A2%83/" title="Mac下Clion配置openGL环境">Mac下Clion配置openGL环境</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-08T07:13:12.000Z" title="发表于 2020-10-08 15:13:12">2020-10-08</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/c/">c++</a></span></div><div class="content">CMakeLists.txt
+
+123456789101112131415161718192021cmake_minimum_required(VERSION 3.17)project(learn1)set(CMAKE_CXX_STANDARD 14)# 添加头文件set(GLFW_H /usr/local/Cellar/glfw/3.3.2/include/GLFW)set(GLAD_H /usr/local/include/glad)include_directories($&#123;GLFW_H&#125; $&#123;GLAD_H&#125;)# 添加目标链接set(GLFW_LINK /usr/local/Cellar/glfw/3.3.2/lib/libglfw.3.dylib)link_libraries($&#123;OPENGL&#125; $&#123;GLFW_LINK&#125;)link_libraries(/usr/local/lib)include_directories(/usr/local/include)add_executable(learn1 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/09/25/Eigen/" title="eigen">     <img class="post_bg" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-cd1e80cf5c96839b5b8523241ebca95a_1440w.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="eigen"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/25/Eigen/" title="eigen">eigen</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-25T09:45:06.000Z" title="发表于 2020-09-25 17:45:06">2020-09-25</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/c/">c++</a></span></div><div class="content">在使用Eigen库做矩阵变换的时候，有时候会发生错误，而且Eigen库坑爹的一点是他不会把错误在哪一行告诉你，而是只给出一个错误信息，这一点就很烦。
+笔者使用Eigen库的时候，就遇到了下面的报错error: static_assert failed due to requirement’(int(Eigen::internal::size_of_xpr_at_compile_time&lt;Eigen::Matrix&lt;float, 3, 3, 0, 3, 3&gt;…
+当然，实际报错的内容比上面要长，我也只截取了一段错误信息。
+根据网上各种资料显示，出现这个错误基本上都是与矩阵的维度有关。
+这里贴一下我的代码：
+12345678Eigen::Matrix4f R=Eigen::Matrix4f::Identity();Eigen::Matrix3f N;N&lt;&lt;1,2,3,4,5,6,7,8,9;for (int i=0;i&lt;3;i++)&#123;  for (int j=0;j&lt;3;j++)&#123;    R(i,j)=N(i,j);  &#125 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/09/16/2020-09-16-%E8%A2%AB3%E6%95%B4%E9%99%A4%E6%95%B4%E6%95%B0%E7%9A%84%E6%96%87%E6%B3%95%E8%A1%A8%E7%A4%BA/" title="被3整除整数的文法表示">     <img class="post_bg" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-1108ae788356ecd7228a35ef16be1a13_1440w.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="被3整除整数的文法表示"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/16/2020-09-16-%E8%A2%AB3%E6%95%B4%E9%99%A4%E6%95%B4%E6%95%B0%E7%9A%84%E6%96%87%E6%B3%95%E8%A1%A8%E7%A4%BA/" title="被3整除整数的文法表示">被3整除整数的文法表示</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-16T09:17:00.000Z" title="发表于 2020-09-16 17:17:00">2020-09-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="content">能被3整除整数的文法表示
+此题为编译原理相关题目，考察文法表示相关内容。
+原文地址：被3整除整数的文法表示
+题目
+写出所有能被3整除的十进制整数的文法表示。（注：为方便表示，规定整数首位可以为0，即018此种表示是合法的，就是整数18。）
+分析
+由数学知识可以得到，如果整数的每个位上的数字相加之和可以被3整除，则此整数可以被3整除。
+因此，我们用是否可以被3整除为标准，将0-9这十个数字分成三组。
+
+0，3，6，9：可以被3整除
+1，4，7：被3整除余1
+2，5，8：被3整除余2
+
+文法表达式为：G=（V$_N$，V$_T$，P，S），其中
+
+V$_N$={S,A,B}，非终结符集合
+V$_T$={0,1,2,3,4,5,6,7,8,9}，终结符集合
+S为开始符
+
+接下来重点研究的是P中规则的集合。
+首先，在数字中加上{0,3,6,9}此类数字时，不影响数字的整除性，即若原本的数字可被3整除，则加上{0,3,6,9}此类数字后，依旧可以被3整除；若原本数字就不能被3整除，则加上{0,3,6,9}此类数字后，依旧不能被3整除。
+其次，将1,4,7中的任意一个数字与2,5,8中的任意一个相 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Anastasia</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">16</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="sticky_layout"><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2020/12/15/c-%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="c++纯虚函数与抽象基类"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++纯虚函数与抽象基类"/></a><div class="content"><a class="title" href="/2020/12/15/c-%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="c++纯虚函数与抽象基类">c++纯虚函数与抽象基类</a><time datetime="2020-12-15T06:55:24.000Z" title="发表于 2020-12-15 14:55:24">2020-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/12/c-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6/" title="c++重载运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++重载运算符"/></a><div class="content"><a class="title" href="/2020/12/12/c-%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6/" title="c++重载运算符">c++重载运算符</a><time datetime="2020-12-12T03:35:42.000Z" title="发表于 2020-12-12 11:35:42">2020-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/09/c-%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" title="c++引用变量详解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++引用变量详解"/></a><div class="content"><a class="title" href="/2020/12/09/c-%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" title="c++引用变量详解">c++引用变量详解</a><time datetime="2020-12-09T06:32:31.000Z" title="发表于 2020-12-09 14:32:31">2020-12-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/09/c-%E5%B0%86%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%EF%BC%88%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%89/" title="c++将函数作为函数参数（函数指针）"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="c++将函数作为函数参数（函数指针）"/></a><div class="content"><a class="title" href="/2020/12/09/c-%E5%B0%86%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%EF%BC%88%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%89/" title="c++将函数作为函数参数（函数指针）">c++将函数作为函数参数（函数指针）</a><time datetime="2020-12-09T03:29:48.000Z" title="发表于 2020-12-09 11:29:48">2020-12-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/13/OpenGL%E6%A8%A1%E5%9E%8B%E5%8A%A0%E8%BD%BD/" title="OpenGL模型加载"><img src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-e69171fabad611d71a99dd9528dcf35b_1440w.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenGL模型加载"/></a><div class="content"><a class="title" href="/2020/10/13/OpenGL%E6%A8%A1%E5%9E%8B%E5%8A%A0%E8%BD%BD/" title="OpenGL模型加载">OpenGL模型加载</a><time datetime="2020-10-13T14:00:00.000Z" title="发表于 2020-10-13 22:00:00">2020-10-13</time></div></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/c/"><span class="card-category-list-name">c++</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/network/"><span class="card-category-list-name">network</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/opengl/"><span class="card-category-list-name">opengl</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"><span class="card-category-list-name">编译原理</span><span class="card-category-list-count">1</span></a></li>
+            
+            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/c/" style="font-size: 1.5em; color: #99a9bf">c++</a> <a href="/tags/eigen/" style="font-size: 1.1em; color: #999">eigen</a> <a href="/tags/network/" style="font-size: 1.37em; color: #99a4b2">network</a> <a href="/tags/opengl/" style="font-size: 1.23em; color: #999ea6">opengl</a> <a href="/tags/python/" style="font-size: 1.37em; color: #99a4b2">python</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 1.1em; color: #999">图形学</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 1.1em; color: #999">编译原理</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/12/"><span class="card-archive-list-date">十二月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/10/"><span class="card-archive-list-date">十月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">8</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">16</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">25.1k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-06-07T02:26:42.923Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Anastasia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">hello stranger</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>function subtitleType () {
+  $.getJSON('https://api.btstu.cn/yan/api.php?charset=utf-8&encode=json',function (data) {
+    if (true) {
+      var sub = "".length == 0 ? new Array() : "".split(',')
+      var both = sub.unshift(data.text)
+      typed = new Typed('#subtitle', {
+        strings: sub,
+        startDelay: 300,
+        typeSpeed: 150,
+        loop: true,
+        backSpeed: 50,
+      })
+    } else {
+      document.getElementById('subtitle').innerHTML = data.text
+    }
+  })
+}
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>

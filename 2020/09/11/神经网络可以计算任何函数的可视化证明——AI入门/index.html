@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>神经网络可以计算任何函数的可视化证明 | Ana's blog</title><meta name="keywords" content="network,python"><meta name="author" content="Anastasia"><meta name="copyright" content="Anastasia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="写在前面  此文是我入门AI的学习笔记，教材是《nueral networks and deep learning》，作者Michael Nielsen。 这是一本免费的书籍，网址在这里. 此文是对书中第四章内容的整理归纳和分析，关于前几章的知识点，在我之前的博客之中。 初学者入门，可能会有错误，请大家批评指正。  本次的内容主要是为了证明一个问题，即神经网络可以用来计算任何一个函数。 这是一种普">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络可以计算任何函数的可视化证明">
+<meta property="og:url" content="http://example.com/2020/09/11/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8F%AF%E4%BB%A5%E8%AE%A1%E7%AE%97%E4%BB%BB%E4%BD%95%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E8%AF%81%E6%98%8E%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Ana&#39;s blog">
+<meta property="og:description" content="写在前面  此文是我入门AI的学习笔记，教材是《nueral networks and deep learning》，作者Michael Nielsen。 这是一本免费的书籍，网址在这里. 此文是对书中第四章内容的整理归纳和分析，关于前几章的知识点，在我之前的博客之中。 初学者入门，可能会有错误，请大家批评指正。  本次的内容主要是为了证明一个问题，即神经网络可以用来计算任何一个函数。 这是一种普">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg">
+<meta property="article:published_time" content="2020-09-11T08:40:00.000Z">
+<meta property="article:modified_time" content="2021-06-07T01:38:26.236Z">
+<meta property="article:author" content="Anastasia">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/09/11/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8F%AF%E4%BB%A5%E8%AE%A1%E7%AE%97%E4%BB%BB%E4%BD%95%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E8%AF%81%E6%98%8E%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-06-07 09:38:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Ana's blog" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">两个预先声明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">一个输入和一个输出的情况</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">两个输入的情况</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">多个输入的情况</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">S型神经元的延伸</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">修补阶跃函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">证明题</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ana's blog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">神经网络可以计算任何函数的可视化证明</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-11T08:40:00.000Z" title="发表于 2020-09-11 16:40:00">2020-09-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-06-07T01:38:26.236Z" title="更新于 2021-06-07 09:38:26">2021-06-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/network/">network</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1>写在前面</h1>
+<ol>
+<li>此文是我入门AI的学习笔记，教材是《nueral networks and deep learning》，作者Michael Nielsen。</li>
+<li>这是一本免费的书籍，网址<a target="_blank" rel="noopener" href="http://neuralnetworksanddeeplearning.com/chap4.html">在这里</a>.</li>
+<li>此文是对书中<strong>第四章</strong>内容的整理归纳和分析，关于前几章的知识点，在我之前的博客之中。</li>
+<li>初学者入门，可能会有错误，请大家批评指正。</li>
+</ol>
+<p>本次的内容主要是为了证明一个问题，即<strong>神经网络可以用来计算任何一个函数。</strong><br>
+这是一种<strong>普遍性的解释</strong></p>
+<blockquote>
+<p>This result tells us that neural networks have a kind of universality. No matter what function we want to compute, we know that there is a neural network which can do the job.</p>
+</blockquote>
+<p>在此次的证明中，我们忽略了函数本身的<strong>数学性质</strong>，而是从<strong>图形</strong>的角度出发，用一种直观、形象、可视化的方式证明了这个普遍性。</p>
+<h1>两个预先声明</h1>
+<p>在进行证明之前，有两点预先声明需要澄清</p>
+<ol>
+<li>神经网络给出的并不是函数的精确值，而是一个近似估计（approximation）。</li>
+<li>我们进行预估的函数必须是<strong>连续函数</strong>，非连续函数是无法使用神经网络进行估计的。（因为原本我们的神经网络对于输入是进行连续型的计算）</li>
+</ol>
+<p>对于第二个问题，一般来说我们也可以用连续的函数去拟合非连续的函数，最终得到的效果也很不错，所以在实践中并不是什么严重的限制。</p>
+<h1>一个输入和一个输出的情况</h1>
+<p><img src="https://img-blog.csdnimg.cn/20200108130355507.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+注：此处使用的神经元是s型神经元。</p>
+<p>在上图所示的具有单个输入和单个输出的神经网络中，我们将隐藏层的底层神经元的权值设为0，而关注顶层神经元。当改变权值w和偏置b时，我们得到的输出图形会发生变化。<a target="_blank" rel="noopener" href="http://neuralnetworksanddeeplearning.com/chap4.html#universality_with_one_input_and_one_output">演示网页</a></p>
+<p>最后得出的结论是：改变<strong>权值</strong>会改变图像的<strong>陡峭程度</strong>，改变<strong>偏置</strong>会改变图像的<strong>左右位置</strong></p>
+<p>而我们将<strong>权重w</strong>设置的很大时，图像图像就变成了阶跃函数（step function）。<br>
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL25ldXJhbG5ldHdvcmtzYW5kZGVlcGxlYXJuaW5nLmNvbS9pbWFnZXMvaGlnaF93ZWlnaHRfZnVuY3Rpb24uanBn?x-oss-process=image/format,png" alt="在这里插入图片描述"><br>
+由计算（附后）可以得到，阶跃点x的坐标为<kbd>-b/w</kbd><br>
+<img src="https://img-blog.csdnimg.cn/20200108132822772.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>我们用字母s来表示阶跃点的位置，即</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">s</span>=-b/w</span><br><span class="line">下同</span><br></pre></td></tr></table></figure>
+<p>接下来我们加入底层神经元，一起来探究图形的变化。</p>
+<p>根据上面的经验我们可以得到，当我们将底层神经元的权重也设置的很大时，图像将会得到<strong>两个阶跃</strong>，其中s1，s2分别代表了两个阶跃点的坐标。<br>
+<img src="https://img-blog.csdnimg.cn/20200108132954185.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+而上图中，由图形演示我们可以知道，w1和w2分别控制了两个阶跃点的高度。</p>
+<p>当我们将两个阶跃点的高度设置正好<strong>互为相反数</strong>时，就可以得到一个<strong>凸起（bump）</strong>。如下图所演示。<br>
+<img src="https://img-blog.csdnimg.cn/20200108133530556.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+我们用h来表示凸起的高度，即</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">h</span>=w1=-w2</span><br><span class="line">下同</span><br></pre></td></tr></table></figure>
+<p>当我们用编程的角度去看待这个问题，就可以得到一个<kbd>if-then-else</kbd>的陈述。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> input&gt;step point</span><br><span class="line">	add <span class="number">1</span> to the weighted output</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	add <span class="number">0</span> to the weighted output</span><br></pre></td></tr></table></figure>
+<p>当隐藏层只有两个神经元时，我们可以得到一个一个凸起。由此可知，当我们在隐藏层加入更多的神经元，就可以得到不同位置，不同高度的凸起。</p>
+<p>两对时：<br>
+<img src="https://img-blog.csdnimg.cn/20200108134346504.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>让我们去尝试拟合一个复杂的一元函数<br>
+<img src="https://img-blog.csdnimg.cn/20200108134652796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+上图所示的演示使用了五对隐藏神经元 ，对一个复杂函数图像的模拟虽然不是特别的精确，但是它告诉我们了<strong>精确模拟的可能性</strong>，即添加更多的隐藏神经元，改变他们的阶跃点和高度，最终将会得到偏差很小的模拟。</p>
+<h1>两个输入的情况</h1>
+<p>如图，我们将两个输入分别设为x和y，它模拟的是二元函数的情况。<br>
+<img src="https://img-blog.csdnimg.cn/20200108135544997.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+为了方便思考，我们先将y的输入权值设为0，即w2=0，而考虑x轴的情况。</p>
+<p>有了前面单个输入的经验，我们可以知道，当w1很大的时候，函数图像再次出现<strong>阶跃</strong>现象。<br>
+<img src="https://img-blog.csdnimg.cn/20200108140237906.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+我们也可以用同样的方法，在x轴方向得到<strong>凸起</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200108140504968.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+如上图所示。此时y输入指向隐藏神经元的权重均为0.<br>
+参数解释：</p>
+<ul>
+<li>x 0.3：第一个阶跃点的位置是x=0.3</li>
+<li>x 0.7：第二个阶跃点的位置是x=0.7</li>
+<li>h：凸起的高度，也是隐藏神经元的输出权重。</li>
+</ul>
+<p>同样的图形也可以在y轴方向演示。</p>
+<p><img src="https://img-blog.csdnimg.cn/202001081409085.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+此时x输入指向隐藏神经元的权重均为0.</p>
+<p>此时我们将x、y方向进行叠加，得到如图所示的函数图像。<br>
+<img src="https://img-blog.csdnimg.cn/20200108141210767.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+此时，四周“高原”的高度为h，中间“塔”的高度为2h。</p>
+<p>为了得到与单个神经元“凸起”相似的结构，我们需要对输出层的偏置进行合理的选择。</p>
+<p>数学计算（附后）与实际图像操作告诉我们，当偏置b的值设定为<kbd>-3/2h</kbd>时，会得到中间凸起的<strong>塔</strong>形函数。<br>
+<img src="https://img-blog.csdnimg.cn/20200108153758301.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+增加隐藏神经元的数量，即可得到不同高度，不同位置的塔，从而对不同的二元函数进行拟合计算。</p>
+<p>如下图所示，两个塔的情况。<br>
+<img src="https://img-blog.csdnimg.cn/20200108154114418.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+<em>其中第三层w的值用来控制塔的高度</em></p>
+<p>以及很多塔的情况<br>
+<img src="https://img-blog.csdnimg.cn/20200108154212411.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1>多个输入的情况</h1>
+<p>根据以上的经验，我们可以得出，对于多个输入的神经网络拟合情况。<br>
+<img src="https://img-blog.csdnimg.cn/2020010815435037.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol>
+<li>第一层<strong>权值</strong>设置的很大，同时调整<strong>偏置</strong>，得到类似“阶跃”结构。</li>
+<li>第二层<strong>权值</strong> 交替设置为+h，-h，设置<strong>偏置</strong>为<kbd>(-m+0.5)h</kbd> ,其中m为输入的个数。</li>
+<li>第三层的<strong>权值</strong>设置用来控制高度，，设置<strong>偏置</strong>使其满足<kbd>σ^-1^◦f</kbd> 的函数图像。</li>
+</ol>
+<h1>S型神经元的延伸</h1>
+<p>以上结论都是在s型神经元的基础上得来的。</p>
+<p>如下图是s型神经元的输出函数图。<br>
+<img src="https://img-blog.csdnimg.cn/20200108171148749.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+但是这个结论是可以推广到更多的神经元模型上。</p>
+<p>如下图，激活函数的图形是不规则的形状。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200108171322692.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+当我们按照上面的方法，将<strong>权值增大</strong>，同时调整<strong>偏置</strong>时，依旧可以得到一个很好的阶跃函数，其中阶跃点的值为<kbd>-b/w</kbd>。<a target="_blank" rel="noopener" href="http://neuralnetworksanddeeplearning.com/chap4.html#extension_beyond_sigmoid_neurons">演示网页</a><br>
+<img src="https://img-blog.csdnimg.cn/20200108171352370.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>因此我们可以使用这个神经元模型，通过上述所得的技巧来完成对所给函数的拟合。</p>
+<p>但是并非所有的激活函数都可以用来拟合，事实上，函数需要满足条件</p>
+<ul>
+<li>z→−∞和z→∞ 时，函数的值是确定的，也就是我们阶跃函数所取的两个值。</li>
+<li>上述两个值不能相同。</li>
+</ul>
+<h1>修补阶跃函数</h1>
+<p>此处关注的是，我们在用阶跃函数拟合真实函数时，出现的<kbd>故障窗口（window of failure）</kbd><br>
+<img src="https://img-blog.csdnimg.cn/20200108174156890.png" alt="在这里插入图片描述"><br>
+当然我们可以通过增大权值来使此窗口变得很窄，但是这里作者给出了另一个解决办法。</p>
+<p>假设我们隐藏神经元的加权输出<kbd>σ^-1^◦f</kbd> 图像为<br>
+<img src="https://img-blog.csdnimg.cn/20200108174625547.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+我们采用一个输入，一个输出的方式得到了如下图所示的拟合。<br>
+<img src="https://img-blog.csdnimg.cn/20200108174718676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+我们将上图的凸起高度减半，得到下图。<br>
+<img src="https://img-blog.csdnimg.cn/20200108174807227.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+第二个操作是，将上述图像向右平移，平移的距离是阶跃长度的一半，得到的图像如下。<br>
+<img src="https://img-blog.csdnimg.cn/20200108174932639.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+将上述两个图像叠加，得到的这个整体的近似仍然在⼀些⼩窗⼝的地⽅有故障。但是问题⽐以前要小很多。原因是在⼀个近似中的故障窗⼝的点，不会在另⼀个的故障窗⼝中。</p>
+<p>我们甚⾄能通过加⼊更多的平移结果，⽤ M 表⽰，重叠的近似 σ^-1^◦f/M 来做得更好。假设故障窗⼝已经⾜够窄了，其中的点只会在⼀个故障窗⼝中。并且假设我们使⽤⼀个 M ⾜够⼤的重叠近似，结果会是⼀个⾮常好的整体近似。</p>
+<h1>结论</h1>
+<ol>
+<li>此章的内容是用可视化的方式，证明了神经网络可以用来拟合计算任意一个函数。</li>
+<li>此章对于普遍性的解释当然不是如何使⽤神经⽹络计算的切实可⾏的⽤法，但是理解此章的内容依旧十分重要。</li>
+<li>正是因为任意函数都是可以用神经网络来拟合计算的，因此真正重要的问题不是这个函数是否存在，而是<strong>找到一个好的计算函数的方法</strong>。</li>
+</ol>
+<h1>证明题</h1>
+<ol>
+<li>阶跃点的位置（以一个输入和一个输出的情况为例）</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20200108181333707.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>证明中间凸起的<strong>塔</strong>形函数的偏置b的值设定为<kbd>(-m+0.5)h</kbd>，其中m为输入的个数。</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20200108195421493.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol start="3">
+<li>证明对于两个至多个的情况，上述情况所使用的两层隐藏神经元的情况可以减少为使用单层隐藏神经元。</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20200108204705469.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FuYXN0YXNpYXdhbmd5eA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Anastasia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/09/11/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8F%AF%E4%BB%A5%E8%AE%A1%E7%AE%97%E4%BB%BB%E4%BD%95%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E8%AF%81%E6%98%8E%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/">http://example.com/2020/09/11/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8F%AF%E4%BB%A5%E8%AE%A1%E7%AE%97%E4%BB%BB%E4%BD%95%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E8%AF%81%E6%98%8E%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ana's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/network/">network</a><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post_share"><div class="social-share" data-image="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/16/2020-09-16-%E8%A2%AB3%E6%95%B4%E9%99%A4%E6%95%B4%E6%95%B0%E7%9A%84%E6%96%87%E6%B3%95%E8%A1%A8%E7%A4%BA/"><img class="prev-cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-1108ae788356ecd7228a35ef16be1a13_1440w.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">被3整除整数的文法表示</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/11/%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%BA%E4%BD%95%E5%BE%88%E9%9A%BE%E8%AE%AD%E7%BB%83%EF%BC%9F%E2%80%94%E2%80%94AI%E5%85%A5%E9%97%A8/"><img class="next-cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">神经网络为何很难训练？</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/09/10/2020-09-10-手写数字识别MNIST（python3）/" title="手写数字识别MNIST（python3）"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-834cdc1e1f29e1f92ec25185fe1e964e_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-10</div><div class="title">手写数字识别MNIST（python3）</div></div></a></div><div><a href="/2020/09/11/反向传播算法（backpropagation）计算梯度下降（SGD）——AI入门/" title="反向传播算法(backpropagation)计算梯度下降(SGD)详解"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">反向传播算法(backpropagation)计算梯度下降(SGD)详解</div></div></a></div><div><a href="/2020/09/11/深度神经网络为何很难训练？——AI入门/" title="神经网络为何很难训练？"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">神经网络为何很难训练？</div></div></a></div><div><a href="/2020/09/11/2020-09-11-改善神经网络的学习方法（交叉熵函数，过度拟合，规范化，初始化权重）/" title="改善神经网络的学习方法（交叉熵函数，过度拟合，规范化，初始化权重）"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">改善神经网络的学习方法（交叉熵函数，过度拟合，规范化，初始化权重）</div></div></a></div><div><a href="/2020/09/11/卷积神经网络CNN+识别手写数字MNIST（附代码）——AI入门/" title="卷积神经网络(CNN)识别手写数字MNIST(附代码)"><img class="cover" src="https://mdimage001.oss-cn-beijing.aliyuncs.com/img/v2-fc6b5bc5ed17621fa52acf7a19b2e379_1440w.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">卷积神经网络(CNN)识别手写数字MNIST(附代码)</div></div></a></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Anastasia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">hello stranger</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
