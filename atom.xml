@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-06-24T03:07:30.893Z</updated>
+  <updated>2021-06-24T09:04:03.796Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++中vector容器使用</title>
+    <link href="http://example.com/2021/06/24/c++vector/"/>
+    <id>http://example.com/2021/06/24/c++vector/</id>
+    <published>2021-06-24T09:00:00.000Z</published>
+    <updated>2021-06-24T09:04:03.796Z</updated>
+    
+    <content type="html"><![CDATA[<h1><a href="http://xn--C++vector-sl6nm0jrs2arzpq57f.md">C++中vector容器使用.md</a></h1><h1>1、vector的创建</h1><ul><li>直接创建一个空vector</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;temp;</span><br></pre></td></tr></table></figure><ul><li>创建一个初始长度为10和初始值为0的vector</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;temp(<span class="number">10</span>,<span class="number">0</span>);</span><br></pre></td></tr></table></figure><ul><li>从原有数组创建vector</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;v(a,a+<span class="number">5</span>);</span><br></pre></td></tr></table></figure><ul><li>创建二维数组</li></ul><p>注意空格</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt;v;</span><br></pre></td></tr></table></figure><h1>2、常用函数</h1><ul><li>取得数组大小</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>.size()</span><br></pre></td></tr></table></figure><ul><li>排序</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sort(<span class="built_in">vector</span>.begin(),<span class="built_in">vector</span>.end())<span class="comment">//默认升序</span></span><br><span class="line">sort(<span class="built_in">vector</span>.begin(),<span class="built_in">vector</span>.end(),greater&lt;<span class="keyword">int</span>&gt;());<span class="comment">//降序</span></span><br></pre></td></tr></table></figure><ul><li>添加元素，会改变数组的大小</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>.push_back()</span><br></pre></td></tr></table></figure><ul><li>删除元素，会改变数组的大小</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>.pop_back()</span><br></pre></td></tr></table></figure><ul><li>清空整个数组</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>.clear()</span><br></pre></td></tr></table></figure><ul><li>交换</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;v1;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;v2;</span><br><span class="line">v1.swap(v2);</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;&lt;a href=&quot;http://xn--C++vector-sl6nm0jrs2arzpq57f.md&quot;&gt;C++中vector容器使用.md&lt;/a&gt;&lt;/h1&gt;
+&lt;h1&gt;1、vector的创建&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;直接创建一个空vector&lt;/li&gt;
+&lt;/ul&gt;
+&lt;</summary>
+      
+    
+    
+    
+    <category term="c++" scheme="http://example.com/categories/c/"/>
+    
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+  </entry>
   
   <entry>
     <title>十大经典排序算法C++版</title>
